@@ -1,23 +1,20 @@
 import { useState, useCallback, useRef } from "react";
 
-// ── Límites de validación ─────────────────────────────────────
 const MIN = -999;
 const MAX = 999;
 
-// ── Color del contador según valor ───────────────────────────
 function getCounterColor(n) {
   if (n > 0) return "#39ff14";   // verde neón
   if (n < 0) return "#ff3a3a";   // rojo
   return "#e2e240";              // amarillo neutro
 }
 
-// ── Componente principal ──────────────────────────────────────
 export default function App() {
   const [count, setCount]     = useState(0);
-  const [key, setKey]         = useState(0);   // fuerza re-render para animación
+  const [key, setKey]         = useState(0);  
   const [ring, setRing]       = useState(false);
   const [error, setError]     = useState("");
-  const [history, setHistory] = useState([]);  // historial de últimas acciones
+  const [history, setHistory] = useState([]);  
   const ringTimer = useRef(null);
 
   const triggerPop = () => {
@@ -33,7 +30,6 @@ export default function App() {
 
   const clearError = () => setError("");
 
-  // ── Acciones ──────────────────────────────────────────────
   const increment = useCallback(() => {
     clearError();
     if (count >= MAX) {
@@ -72,12 +68,11 @@ export default function App() {
   }, [count]);
 
   const color = getCounterColor(count);
-  const pct   = ((count - MIN) / (MAX - MIN)) * 100; // barra de progreso
+  const pct   = ((count - MIN) / (MAX - MIN)) * 100; 
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 relative">
 
-      {/* Fondo de cuadrícula */}
       <div
         className="fixed inset-0 opacity-10"
         style={{
@@ -87,7 +82,6 @@ export default function App() {
         }}
       />
 
-      {/* Tarjeta principal */}
       <div
         className="relative w-full max-w-sm rounded-2xl border overflow-hidden"
         style={{
@@ -97,7 +91,7 @@ export default function App() {
           transition: "border-color 0.4s, box-shadow 0.4s",
         }}
       >
-        {/* Header */}
+        
         <div className="px-6 pt-6 pb-2 flex items-center justify-between">
           <div>
             <p className="text-xs tracking-[0.3em] uppercase font-body" style={{ color: "#555" }}>
@@ -110,7 +104,7 @@ export default function App() {
               DANIEL.ANALYST
             </h1>
           </div>
-          {/* LED indicador */}
+          
           <div className="relative flex items-center justify-center w-8 h-8">
             {ring && (
               <div
@@ -125,7 +119,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* Barra de progreso */}
         <div className="mx-6 mt-1 h-1 rounded-full bg-white/10 overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-300"
@@ -133,7 +126,6 @@ export default function App() {
           />
         </div>
 
-        {/* Número contador */}
         <div className="flex items-center justify-center py-10">
           <div className="relative">
             <span
@@ -153,7 +145,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* Mensaje de error */}
         <div className="mx-6 mb-4 h-6">
           {error && (
             <p className="text-center text-xs font-body" style={{ color: "#ff6b6b" }}>
@@ -162,7 +153,6 @@ export default function App() {
           )}
         </div>
 
-        {/* Botones */}
         <div className="px-6 pb-6 grid grid-cols-3 gap-3">
           {/* Decremento */}
           <button
@@ -181,7 +171,6 @@ export default function App() {
             −
           </button>
 
-          {/* Reset */}
           <button
             onClick={reset}
             disabled={count === 0}
@@ -197,8 +186,7 @@ export default function App() {
           >
             Reset
           </button>
-
-          {/* Incremento */}
+          
           <button
             onClick={increment}
             disabled={count >= MAX}
@@ -216,10 +204,8 @@ export default function App() {
           </button>
         </div>
 
-        {/* Separador */}
         <div className="mx-6 border-t" style={{ borderColor: "#ffffff10" }} />
 
-        {/* Historial */}
         <div className="px-6 py-4">
           <p className="text-xs tracking-[0.25em] uppercase mb-3 font-body" style={{ color: "#444" }}>
             Historial reciente
@@ -250,12 +236,11 @@ export default function App() {
           )}
         </div>
 
-        {/* Footer */}
         <div
           className="px-6 py-3 text-center border-t font-mono text-xs"
           style={{ borderColor: "#ffffff08", color: "#2a2a2a" }}
         >
-          RANGO VÁLIDO: {MIN} — {MAX}
+      
         </div>
       </div>
     </div>
